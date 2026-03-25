@@ -158,9 +158,14 @@ The test suite uses transactional rollbacks — each test gets a fresh state and
 All temporal filters accept enum values: `day` = `Monday`…`Sunday`, `period` = `AM Peak`, `PM Peak`, `Midday`, `Evening`, `Overnight`.
 
 **Example:**
+CLI:
 ```bash
 curl "http://localhost:8000/aggregates/?day=Monday&period=AM+Peak&limit=10"
 ```
+OpenAPI docs:
+http://localhost:8000/docs **Must have Docker running or locally**
+<img width="1641" height="727" alt="image" src="https://github.com/user-attachments/assets/5878b8b5-1135-4434-910a-ed95a3be0964" />
+
 
 ## Jupyter Notebook
 
@@ -172,6 +177,9 @@ uv run jupyter notebook notebooks/traffic_visualization.ipynb
 ```
 
 Set your `MAPBOX_TOKEN` in the Setup cell, then run all cells. The notebook calls the API, converts WKT geometry to GeoJSON, and renders a choropleth speed map over Jacksonville, FL.
+
+<img width="1381" height="764" alt="image" src="https://github.com/user-attachments/assets/2a3815c2-94c7-4041-aa93-acbce13f8ec7" />
+
 
 ## Key Design Decisions
 
