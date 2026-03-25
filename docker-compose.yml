@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgis/postgis:15-3.4
+    container_name: traffic_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: traffic_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  api:
+    build: .
+    container_name: traffic_api
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    environment:
+      # Use the docker internal DNS 'db' as the host mapping to the database container
+      - DATABASE_URL=postgresql://postgres:postgrespassword@db:5432/traffic_db
+    # Helpful for local development: map the current directory to /app
+    # allowing live reloading using 'uvicorn app.main:app --reload' if desired inside docker.
+    volumes:
+      - .:/app
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
